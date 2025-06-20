@@ -2,6 +2,11 @@ import { Button } from "@/components/ui/button";
 import bannerOne from "../../assets/banner-1.webp";
 import bannerTwo from "../../assets/banner-2.webp";
 import bannerThree from "../../assets/banner-3.webp";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import {
   Airplay,
   BabyIcon,
@@ -235,21 +240,56 @@ function ShoppingHome() {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
-            Feature Products
+            Featured Products
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {productList && productList.length > 0
-              ? productList.map((productItem) => (
+
+          {productList && productList.length > 0 && (
+            <Swiper
+              modules={[Autoplay, Navigation, Pagination]}
+              spaceBetween={20}
+              navigation={{
+                nextEl: ".custom-swiper-button-next",
+                prevEl: ".custom-swiper-button-prev",
+              }}
+              pagination={{
+                clickable: true,
+                el: ".custom-swiper-pagination",
+              }}
+              autoplay={{ delay: 3000, disableOnInteraction: false }}
+              loop={true}
+              breakpoints={{
+                640: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 4 },
+              }}
+              className="relative"
+            >
+              {productList.map((productItem) => (
+                <SwiperSlide key={productItem.id}>
                   <ShoppingProductTile
-                    handleGetProductDetails={handleGetProductDetails}
                     product={productItem}
+                    handleGetProductDetails={handleGetProductDetails}
                     handleAddtoCart={handleAddtoCart}
                   />
-                ))
-              : null}
-          </div>
+                </SwiperSlide>
+              ))}
+
+              {/* Custom Arrows */}
+              <div className="custom-swiper-button-prev absolute top-1/2 left-2 -translate-y-1/2 z-10 cursor-pointer bg-white p-2 rounded-full shadow hover:bg-gray-100 transition">
+                <ChevronLeftIcon className="w-4 h-4 text-gray-600" />
+              </div>
+              <div className="custom-swiper-button-next absolute top-1/2 right-2 -translate-y-1/2 z-10 cursor-pointer bg-white p-2 rounded-full shadow hover:bg-gray-100 transition">
+                <ChevronRightIcon className="w-4 h-4 text-gray-600" />
+              </div>
+
+              {/* Pagination Dots */}
+              <div className="custom-swiper-pagination mt-6 flex justify-center gap-2"></div>
+            </Swiper>
+          )}
         </div>
       </section>
+
       <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}

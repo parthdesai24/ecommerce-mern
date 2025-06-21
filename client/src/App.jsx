@@ -33,46 +33,57 @@ function App() {
 
   return (
       <div className="flex flex-col overflow-hidden bg-white">
-        <Routes>
-          
-          <Route path="/auth"  element={
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <CheckAuth
+              isAuthenticated={isAuthenticated}
+              user={user}
+            ></CheckAuth>
+          }
+        />
+        <Route
+          path="/auth"
+          element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AuthLayout />
             </CheckAuth>
-          }>
-          
-            <Route path="login" element={<AuthLogin />}/>
-            <Route path="register" element={<AuthRegister />}/>
-          </Route>
-          
-          <Route path="/admin" element={
+          }
+        >
+          <Route path="login" element={<AuthLogin />} />
+          <Route path="register" element={<AuthRegister />} />
+        </Route>
+        <Route
+          path="/admin"
+          element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AdminLayout />
             </CheckAuth>
-          }>
-          
-          <Route path="dashboard" element={<AdminDashboard />}  />
-          <Route path="features" element={< AdminFeatures />} />
-          <Route path="orders" element={< AdminOrders />}/>
-          <Route path="products" element={< AdminProducts />}/>
-          </Route>
-          
-          <Route path="/shop" element={
+          }
+        >
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="features" element={<AdminFeatures />} />
+        </Route>
+        <Route
+          path="/shop"
+          element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <ShoppingLayout />
             </CheckAuth>
-          }>
-
-          <Route path="home" element={< ShoppingHome/>}/>
-          <Route path="listing" element={< ShoppingListing/>}/>
-          <Route path="account" element={< ShoppingAccount/>}/>
-          <Route path="checkout" element={< ShoppingCheckout/>}/>
-          <Route path="search" element={<SearchProducts/>}/>
-          </Route>
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
+          }
+        >
+          <Route path="home" element={<ShoppingHome />} />
+          <Route path="listing" element={<ShoppingListing />} />
+          <Route path="checkout" element={<ShoppingCheckout />} />
+          <Route path="account" element={<ShoppingAccount />} />
+          <Route path="search" element={<SearchProducts />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 }
 

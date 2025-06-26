@@ -21,27 +21,21 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: [process.env.CLIENT_BASE_URL, "http://localhost:5173"],
-    methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
+    origin: process.env.CLIENT_BASE_URL,
+    methods: ["GET", "POST", "DELETE", "PUT"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Cache-Control",
+      "Expires",
+      "Pragma",
+    ],
     credentials: true,
   })
 );
 
-app.options(
-  "*",
-  cors({
-    origin: [process.env.CLIENT_BASE_URL, "http://localhost:5173"],
-    methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
-    credentials: true,
-  })
-);
-
-app.get("/", (req, res) => {
-  res.send("API is running 🚀");
-});
 app.use(cookieParser());
 app.use(express.json());
-
 app.use("/api/auth", authRouter);
 app.use("/api/admin/products", adminProductsRouter);
 app.use("/api/shop/products", shopProductsRouter);

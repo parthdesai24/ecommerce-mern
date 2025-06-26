@@ -43,6 +43,12 @@ const categoriesWithIcon = [
   { id: "kids", label: "Kids", icon: BabyIcon },
   { id: "accessories", label: "Accessories", icon: WatchIcon },
   { id: "footwear", label: "Footwear", icon: Footprints },
+  {
+    id: "all",
+    label: "Viewall",
+    icon: ShoppingBasket, // or Lucide's GridIcon / PackageCheck
+    isViewAll: true,
+  },
 ];
 
 const brandsWithIcon = [
@@ -92,6 +98,12 @@ function ShoppingHome() {
 
   const handleCollection = () => {
     navigate("/shop/listing");
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 350);
   };
   function handleGetProductDetails(getCurrentProductId) {
     dispatch(fetchProductDetails(getCurrentProductId));
@@ -167,7 +179,7 @@ function ShoppingHome() {
             onClick={handleCollection}
             className={`${
               index === currentSlide ? "opacity-100" : "opacity-0"
-            } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
+            } cursor-pointer absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
           />
         ))}
         <Button
@@ -198,12 +210,17 @@ function ShoppingHome() {
           <h2 className="text-3xl font-bold text-center mb-8">
             Shop by category
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {categoriesWithIcon.map((categoryItem) => (
               <Card
-                onClick={() =>
-                  handleNavigateToListingPage(categoryItem, "category")
-                }
+                onClick={() => {
+                  if (categoryItem.isViewAll) {
+                    sessionStorage.removeItem("filters"); 
+                     handleCollection(); 
+                  } else {
+                    handleNavigateToListingPage(categoryItem, "category");
+                  }
+                }}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">

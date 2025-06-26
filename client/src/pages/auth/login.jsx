@@ -37,7 +37,7 @@ function AuthLogin() {
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center ">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
-        Sign in to your account
+        Sign in to DealHut
         </h1>
         <p className="mt-2">
         Don't have an account?
@@ -45,7 +45,7 @@ function AuthLogin() {
             className="font-medium ml-2 text-primary hover:underline"
              to="/auth/register"
           >
-            Register
+            Register on DealHut
           </Link>
         </p>
       </div>
